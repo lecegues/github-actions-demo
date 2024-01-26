@@ -58,6 +58,13 @@ jobs:
       run: |
         python manage.py collectstatic --noinput
 
+    # Upload to be used later in the process ###
+    - name: Upload Backend Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: backend-build-artifact
+        path: backend/
+
   ### Build Frontend ###
   build-frontend:
     runs-on: ubuntu-latest
@@ -82,9 +89,17 @@ jobs:
         run: | 
           npm run build
 
+      # upload to be used later in the process
+      - name: Upload Frontend Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend-build-artifact
+          path: frontend/
+
   ### Run Backend Unit Tests ###
   unit-test-backend:
     runs-on: ubuntu-latest
+    needs: build-backend
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
