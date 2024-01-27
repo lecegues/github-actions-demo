@@ -109,12 +109,24 @@ jobs:
     strategy:
       matrix:
         python-version: [3.11, 3.12] # should match build matrix
+        
+    services:
+      postgres:
+        image: postgres # docker image used for PostgreSQL service
+        env:
+          # env variables
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432 # map default PostgreSQL port inside container to runner host
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
+    
           
     # reinstall backend dependencies; dependencies are not packaged into build artifacts
       - name: Install backend dependencies
@@ -123,6 +135,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+    
       - name: Download Backend Build Artifact
         uses: actions/download-artifact@v2
         with:
