@@ -89,12 +89,17 @@ jobs:
         run: | 
           npm run build
 
+      # zip step-- compress artifact (too large)
+      - name: Zip Artifact Before Uploading
+        working-directory: ./frontend
+        run: zip release.zip ./* -r
+
       # upload to be used later in the process
       - name: Upload Frontend Build Artifact
         uses: actions/upload-artifact@v2
         with:
           name: frontend-build-artifact
-          path: frontend/
+          path: frontend/release.zip
 
   ### Run Backend Unit Tests ###
   unit-test-backend:
