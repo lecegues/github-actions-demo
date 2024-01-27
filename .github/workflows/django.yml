@@ -51,6 +51,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install black flake8
+    
+    - name: Run linters
+      uses: wearerequired/lint-action@v2
+      with:
+        black: true
+        flake8: true
       
     - name: Build Backend
       working-directory: ./backend
@@ -133,15 +140,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install black flake8
-    
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          black: true
-          flake8: true
-
-    
+        
       - name: Download Backend Build Artifact
         uses: actions/download-artifact@v2
         with:
