@@ -52,6 +52,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Prettify code
+      uses: creyD/prettier_action@v4.3
+      with:
+        prettier_options: --write **/*.{js.md}
+
     - name: Build Backend
       working-directory: ./backend
       # to be replaced with desired build command
