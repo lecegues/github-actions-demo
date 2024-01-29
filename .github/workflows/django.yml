@@ -181,8 +181,12 @@ jobs:
       - name: Unzip Frontend Artifact
         run: unzip frontend/release.zip
 
-      # Run unit tests??? 
-      # name: Run Frontend Unit Tests
+      # Run Frontend UNIT Tests
+      # Unit Tests with Jest
+      # Integration/E2E tests with Playwiright and/or Selenium
+      - name: Run Frontend Unit Tests
+        working-directory: ./frontend
+        run: npm test
     
     
     
